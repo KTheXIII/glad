@@ -1,7 +1,10 @@
 # Binaries
-**/bin
-**/obj
-**/lib
+bin
+obj
+lib
+
+# CMake
+build
 
 # Xcode
 *.xcworkspace
