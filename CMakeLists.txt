@@ -14,4 +14,4 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 file(GLOB SRC_FILES ${PROJECT_SOURCE_DIR}/src/*.c)
 
 add_library(${PROJECT_NAME} STATIC ${SRC_FILES})
-
+target_include_directories(${PROJECT_NAME} INTERFACE ${PROJECT_SOURCE_DIR}/include)
