@@ -1,10 +1,10 @@
 #!/usr/bin/env sh
 
 ins="src/*.c"
-lib=lib
+bin=build
 obj=obj
 
-lib_name='glad'
+name='glad'
 
 c_version=-std=c18
 warnings="-Wall -Wextra"
@@ -13,7 +13,7 @@ other="-O3"
 compile_flags="${c_version} ${warnings} ${includes} ${other}"
 
 mkdir -p $obj
-mkdir -p $lib
+mkdir -p $bin
 
 object_files=()
 for input in $ins; do
@@ -23,5 +23,5 @@ for input in $ins; do
     object_files+=("${obj}/${out}.o")
 done
 
-ar rcs $lib/lib${lib_name}.a "${object_files}"
+ar rcs $bin/lib${name}.a "${object_files}"
 
