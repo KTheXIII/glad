@@ -5,36 +5,31 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)         # Generate compile_commands.json f
 set(CMAKE_SUPPRESS_REGENERATION ON)           # Remove ZERO_CHECK target
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)  # Group CMake targets inside a folder
 
-set(CMAKE_C_STANDARD 17)
-set(CMAKE_CXX_STANDARD 17)
-
-# warnings and errors
+file(GLOB SRC_FILES ${PROJECT_SOURCE_DIR}/src/*.c)
+add_library(${PROJECT_NAME} STATIC ${SRC_FILES})
+target_include_directories(${PROJECT_NAME} PUBLIC
+    "${PROJECT_SOURCE_DIR}/include"
+)
+target_compile_features(${PROJECT_NAME} PRIVATE c_std_17)
 if (NOT MSVC)
-    string(JOIN " " CMAKE_C_FLAGS
-        ${CMAKE_C_FLAGS}
+    target_compile_options(${PROJECT_NAME} PRIVATE
         "-Wall"
         "-Wextra"
         "-Wpedantic"
         "-Werror"
+
+        "-Wall"
+        "-Wextra"
+        "-Wconversion"
+        "-Wpedantic"
+        "-Wshadow"
+        "-Werror"
     )
 else()
-    string(JOIN " " CMAKE_C_FLAGS
-        ${CMAKE_C_FLAGS}
+    target_compile_options(${PROJECT_NAME} PRIVATE
         "/W4"
         "/WX"
         "/wd5105"
     )
-    # output to just `lib` directory instead of `lib/Release` or `lib/Debug` on msvc
-    foreach( OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES} )
-        string(TOUPPER ${OUTPUTCONFIG} OUTPUTCONFIG)
-        set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
-        set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY})
-        set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
-    endforeach( OUTPUTCONFIG CMAKE_CONFIGURATION_TYPES )
 endif()
 
-include_directories(${PROJECT_SOURCE_DIR}/include)
-file(GLOB SRC_FILES ${PROJECT_SOURCE_DIR}/src/*.c)
-
-add_library(${PROJECT_NAME} STATIC ${SRC_FILES})
-target_include_directories(${PROJECT_NAME} INTERFACE ${PROJECT_SOURCE_DIR}/include)

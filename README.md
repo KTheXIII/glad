@@ -5,6 +5,12 @@ system script, `cmake`, `premake5` and `shellscript`.
 
 ## Build
 
+### CMake
+
+```
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -GNinja
+```
+
 ### shellscript
 
 Make `build.sh` into an executable.
