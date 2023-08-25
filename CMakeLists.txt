@@ -6,16 +6,18 @@ set(CMAKE_SUPPRESS_REGENERATION ON)           # Remove ZERO_CHECK target
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)  # Group CMake targets inside a folder
 
 if (NOT MSVC)
-    string(JOIN " " BASE_OPTIONS
+    set(BASE_OPTIONS
         "-Wall"
         "-Wextra"
         "-Wconversion"
         "-Wpedantic"
         "-Wshadow"
         "-Werror"
+
+        "-Wno-language-extension-token"
     )
 else()
-    string(JOIN " " BASE_OPTIONS
+    set(BASE_OPTIONS
         "/W4"
         "/WX"
         "/wd5105"
@@ -41,7 +43,7 @@ target_include_directories(glad
         $<INSTALL_INTERFACE:${GLAD_INC_DIR}>
 )
 target_compile_features(glad PRIVATE c_std_17)
-target_compile_options(glad PRIVATE ${BASE_OPTIONS})
+target_compile_options(glad PRIVATE "${BASE_OPTIONS}")
 add_library(glad::glad ALIAS glad)
 
 # Setup install targets
