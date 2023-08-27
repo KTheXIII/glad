@@ -33,7 +33,6 @@ set(GLAD_INC_DIR ${CMAKE_INSTALL_INCLUDEDIR})
 # Static library target
 file(GLOB SRC_FILES ${PROJECT_SOURCE_DIR}/src/*.c)
 file(GLOB_RECURSE GLAD_HEADERS ${PROJECT_SOURCE_DIR}/include/*.h)
-message(${GLAD_HEADERS})
 
 add_library(glad STATIC ${SRC_FILES})
 target_include_directories(glad
