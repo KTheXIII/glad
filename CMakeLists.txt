@@ -10,10 +10,10 @@ if (NOT MSVC)
         "-Wall"
         "-Wextra"
         "-Wconversion"
-        "-Wpedantic"
         "-Wshadow"
         "-Werror"
 
+        "-Wno-pedantic"
         "-Wno-language-extension-token"
     )
 else()
